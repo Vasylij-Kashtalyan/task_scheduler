@@ -10,6 +10,7 @@ export const TaskForm = () => {
     event.preventDefault();
     const form = event.target;
 
+    if (!form.elements.text.value) return;
     dispatch(addTask(form.elements.text.value));
     form.reset();
   };

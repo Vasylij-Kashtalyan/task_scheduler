@@ -1,8 +1,14 @@
 import { nanoid } from "nanoid";
+import {
+  ADDTASK,
+  DELETETASK,
+  TOGGLECOMPLETED,
+  SETSTATUSFILTER,
+} from "./constants";
 
 export const addTask = (text) => {
   return {
-    type: "tasks/addTask",
+    type: ADDTASK,
     payload: {
       id: nanoid(),
       completed: false,
@@ -13,21 +19,21 @@ export const addTask = (text) => {
 
 export const deleteTasks = (taskId) => {
   return {
-    type: "tasks/deleteTask",
+    type: DELETETASK,
     payload: taskId,
   };
 };
 
 export const toggleCompleted = (taskId) => {
   return {
-    type: "tasks/toggleCompleted",
+    type: TOGGLECOMPLETED,
     payload: taskId,
   };
 };
 
 export const setStatusFilter = (value) => {
   return {
-    type: "filters/setStatusFilter",
+    type: SETSTATUSFILTER,
     payload: value,
   };
 };
