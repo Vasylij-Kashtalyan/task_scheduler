@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import { createAction } from "@reduxjs/toolkit";
 import {
   ADDTASK,
   DELETETASK,
@@ -6,34 +7,18 @@ import {
   SETSTATUSFILTER,
 } from "./constants";
 
-export const addTask = (text) => {
+export const addTask = createAction(ADDTASK, (text) => {
   return {
-    type: ADDTASK,
     payload: {
       id: nanoid(),
       completed: false,
       text,
     },
   };
-};
+});
 
-export const deleteTasks = (taskId) => {
-  return {
-    type: DELETETASK,
-    payload: taskId,
-  };
-};
+export const deleteTasks = createAction(DELETETASK);
 
-export const toggleCompleted = (taskId) => {
-  return {
-    type: TOGGLECOMPLETED,
-    payload: taskId,
-  };
-};
+export const toggleCompleted = createAction(TOGGLECOMPLETED);
 
-export const setStatusFilter = (value) => {
-  return {
-    type: SETSTATUSFILTER,
-    payload: value,
-  };
-};
+export const setStatusFilter = createAction(SETSTATUSFILTER);
