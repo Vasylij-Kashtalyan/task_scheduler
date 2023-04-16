@@ -1,20 +1,10 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 import { fetchTasks, addTask, deleteTask, toggleCompleted } from "./operations";
 
-const tasksInitialState = [
-  { id: 0, text: "Learn HTML and CSS", completed: true },
-  { id: 1, text: "Get good at JavaScript", completed: true },
-  { id: 2, text: "Master React", completed: true },
-  { id: 3, text: "Discover Redux", completed: true },
-  { id: 4, text: "Discover Redux Toolkit", completed: false },
-  { id: 5, text: "Find job", completed: false },
-  { id: 6, text: "Build amazing apps", completed: false },
-  { id: 7, text: "Become expert", completed: false },
-];
-
 const handlePending = (state) => {
   state.isLoading = true;
 };
+
 const handleRejected = (state, action) => {
   state.isLoading = false;
   state.error = action.payload;
@@ -27,6 +17,7 @@ const tasksSlice = createSlice({
     isLoading: false,
     error: null,
   },
+  // властивість extraReducers використовується щоб оголосити редюсери для «зовнішніх» типів екшенів
   extraReducers: {
     // ----------fetchTasks------
     [fetchTasks.pending]: handlePending,

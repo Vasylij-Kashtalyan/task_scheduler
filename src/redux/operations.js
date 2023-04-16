@@ -5,6 +5,7 @@ axios.defaults.baseURL = "https://643acf4bbd3623f1b9bc2faf.mockapi.io";
 
 export const fetchTasks = createAsyncThunk(
   "tasks/fetchAll",
+  // Колбек функція, в якій виконується запит, називається payloadCreator і відповідає за складання значення властивості payload.
   async (_, thunkAPI) => {
     try {
       const response = await axios.get("/tasks");
@@ -29,9 +30,9 @@ export const addTask = createAsyncThunk(
 
 export const deleteTask = createAsyncThunk(
   "tasks/deleteTasks",
-  async (taskId, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-      const response = await axios.delete(`/tasks/${taskId}`);
+      const response = await axios.delete(`/tasks/${id}`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
