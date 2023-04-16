@@ -1,4 +1,5 @@
 import { statusFilters } from "./constants";
+import { createSelector } from "@reduxjs/toolkit";
 
 export const selectTasks = (state) => state.tasks.items;
 
@@ -8,8 +9,11 @@ export const selectError = (state) => state.tasks.error;
 
 export const selectStatusFilters = (state) => state.filters.status;
 
-export const selectTaskCount = (state) => {
-  const tasks = selectTasks(state);
+// використовуємо функцію !!!createSelector!!! для мемонізації селекторів, щоб
+// зберегти виконання функції для запобігання повторним обчисленням!
+export const selectTaskCount = createSelector([selectTasks], (tasks) => {
+  console.log("Calculating task count");
+
   return tasks.reduce(
     (count, task) => {
       if (task.completed) {
@@ -21,19 +25,22 @@ export const selectTaskCount = (state) => {
     },
     { active: 0, completed: 0 }
   );
-};
+});
 
 // Обчислюємо масив завдань, які необхідно відображати в інтерфейсі
-export const selectVisibleTasks = (state) => {
-  const tasks = selectTasks(state);
-  const statusFilter = selectStatusFilters(state);
+export const selectVisibleTasks = createSelector(
+  [selectTasks, selectStatusFilters],
 
-  switch (statusFilter) {
-    case statusFilters.active:
-      return tasks.filter((task) => !task.completed);
-    case statusFilters.completed:
-      return tasks.filter((task) => task.completed);
-    default:
-      return tasks;
+  (tasks, statusFilter) => {
+    switch (statusFilter) {
+      case statusFilters.active:
+        return tasks.filter((task) => !task.completed);
+
+      case statusFilters.completed:
+        return tasks.filter((task) => task.completed);
+
+      default:
+        return tasks;
+    }
   }
-};
+);
